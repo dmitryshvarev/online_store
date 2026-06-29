@@ -1,5 +1,6 @@
 class Product:
     """Класс для представления товара."""
+
     name: str
     description: str
     price: float
@@ -15,6 +16,7 @@ class Product:
 
 class Category:
     """Класс для представления категории товаров."""
+
     categories_count = 0
     products_count = 0
 
