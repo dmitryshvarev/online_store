@@ -14,9 +14,25 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, product: dict):
-        """Возвращает экземпляр класса Product на основе данных словаря."""
-        return cls(product.get("name"), product.get("description"), product.get("price"), product.get("quantity"))
+    def new_product(cls, product_dict, existing_products=None):
+        """Класс-метод для создания или обновления товара на основе словаря."""
+        name = product_dict.get("name")
+        description = product_dict.get("description")
+        price = product_dict.get("price", 0)
+        quantity = product_dict.get("quantity", 0)
+
+        if existing_products:
+            for product in existing_products:
+                if name.lower() == product.name.lower():
+                    best_price = max(price, product.price)
+                    total_quantity = quantity + product.quantity
+
+                    product.price = best_price
+                    product.quantity = total_quantity
+
+                    return product
+
+        return cls(name, description, price, quantity)
 
 
 class Category:
