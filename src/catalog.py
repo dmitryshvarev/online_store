@@ -22,13 +22,20 @@ class Category:
 
     name: str
     description: str
-    products: list[Product]
+    __products: list[Product]
 
     def __init__(self, name, description, products):
         """Метод для инициализации экземпляра класса."""
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = products
 
         Category.categories_count += 1
         Category.products_count += len(products)
+
+    def add_product(self, product: Product) -> None:
+        """Метод для добавления продукта в атрибут products."""
+        self.__products.append(product)
+        Category.products_count += 1
+
+
