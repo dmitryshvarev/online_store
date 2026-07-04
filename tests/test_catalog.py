@@ -44,9 +44,9 @@ def test_category_init(
         category_smartphone.description
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
-    assert category_smartphone.products == """Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.
-Iphone 15, 210000.0 руб. Остаток: 8 шт.
-Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"""
+    assert category_smartphone.products == """Samsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт.
+Iphone 15, 210000 руб. Остаток: 8 шт.
+Xiaomi Redmi Note 11, 31000 руб. Остаток: 14 шт.\n"""
     # assert category_smartphone.products == [product_samsung, product_iphone, product_xiaomi]
 
     assert category_tv.name == "Телевизоры"
@@ -54,7 +54,7 @@ Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"""
         category_tv.description
         == "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
     )
-    assert category_tv.products == '55" QLED 4K, 123000.0 руб. Остаток: 7 шт.\n'
+    assert category_tv.products == '55" QLED 4K, 123000 руб. Остаток: 7 шт.\n'
     # assert category_tv.products == [product_qled]
 
 
@@ -87,5 +87,5 @@ def test_add_product(category_tv, product_samsung):
     category_tv.add_product(product_samsung)
     assert (
         category_tv.products
-        == '55" QLED 4K, 123000.0 руб. Остаток: 7 шт.\nSamsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n'
+        == '55" QLED 4K, 123000 руб. Остаток: 7 шт.\nSamsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт.\n'
     )
