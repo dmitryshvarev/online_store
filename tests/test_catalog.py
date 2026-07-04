@@ -83,6 +83,30 @@ def test_price_setter(product_samsung):
     assert product_samsung.price == 200000.0
 
 
+def test_price_less_or_equal_zero(product_samsung, capsys):
+    product_samsung.price = -100
+    captured = capsys.readouterr()
+    assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
+    assert product_samsung.price == 180000.0
+
+    product_samsung.price = 0
+    captured = capsys.readouterr()
+    assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
+    assert product_samsung.price == 180000.0
+
+
+def test_price_setter_ignore_drop(product_samsung, monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: 'n')
+    product_samsung.price = 100
+    assert product_samsung.price == 180000.0
+
+
+def test_price_setter_accept_drop(product_samsung, monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: 'y')
+    product_samsung.price = 100
+    assert product_samsung.price == 100
+
+
 def test_add_product(category_tv, product_samsung):
     category_tv.add_product(product_samsung)
     assert (
