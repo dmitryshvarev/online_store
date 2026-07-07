@@ -1,4 +1,4 @@
-from src.catalog import Category
+from src.catalog import Category, Product
 
 
 def test_products_and_categories_count(category_smartphone, category_tv):
@@ -44,11 +44,72 @@ def test_category_init(
         category_smartphone.description
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
-    assert category_smartphone.products == [product_samsung, product_iphone, product_xiaomi]
+    assert category_smartphone.products == """Samsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт.
+Iphone 15, 210000 руб. Остаток: 8 шт.
+Xiaomi Redmi Note 11, 31000 руб. Остаток: 14 шт.\n"""
+    # assert category_smartphone.products == [product_samsung, product_iphone, product_xiaomi]
 
     assert category_tv.name == "Телевизоры"
     assert (
         category_tv.description
         == "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
     )
-    assert category_tv.products == [product_qled]
+    assert category_tv.products == '55" QLED 4K, 123000 руб. Остаток: 7 шт.\n'
+    # assert category_tv.products == [product_qled]
+
+
+def test_new_product(product_dict):
+    """Проверяет класс-метод для создания или обновления экземпляра класса Product"""
+    product_cls = Product.new_product(product_dict)
+    assert product_cls.name == "Samsung Galaxy S23 Ultra"
+    assert product_cls.description == "256GB, Серый цвет, 200MP камера"
+    assert product_cls.price == 180000.0
+    assert product_cls.quantity == 5
+
+
+def test_new_product_existing_products(product_dict, product_samsung, product_iphone):
+    product_cls_1 = Product.new_product(product_dict, [product_samsung, product_iphone])
+    product_cls_2 = Product.new_product(product_dict, [product_iphone])
+    assert product_cls_1.quantity == 10
+    assert product_cls_2.quantity == 5
+
+
+def test_price_getter(product_samsung):
+    assert product_samsung.price == 180000.0
+
+
+def test_price_setter(product_samsung):
+    product_samsung.price = 200000.0
+    assert product_samsung.price == 200000.0
+
+
+def test_price_less_or_equal_zero(product_samsung, capsys):
+    product_samsung.price = -100
+    captured = capsys.readouterr()
+    assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
+    assert product_samsung.price == 180000.0
+
+    product_samsung.price = 0
+    captured = capsys.readouterr()
+    assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
+    assert product_samsung.price == 180000.0
+
+
+def test_price_setter_ignore_drop(product_samsung, monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: 'n')
+    product_samsung.price = 100
+    assert product_samsung.price == 180000.0
+
+
+def test_price_setter_accept_drop(product_samsung, monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: 'y')
+    product_samsung.price = 100
+    assert product_samsung.price == 100
+
+
+def test_add_product(category_tv, product_samsung):
+    category_tv.add_product(product_samsung)
+    assert (
+        category_tv.products
+        == '55" QLED 4K, 123000 руб. Остаток: 7 шт.\nSamsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт.\n'
+    )
