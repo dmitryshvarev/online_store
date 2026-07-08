@@ -1,3 +1,5 @@
+import pytest
+
 from src.catalog import Category, Product
 
 
@@ -131,3 +133,14 @@ def test_add_product(category_tv, product_samsung):
         category_tv.products
         == '55" QLED 4K, 123000 руб. Остаток: 7 шт.\nSamsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт.\n'
     )
+
+
+def test_product_iterator(product_iterator):
+    iter(product_iterator)
+    assert product_iterator.index == 0
+    assert next(product_iterator).name == "Samsung Galaxy S23 Ultra"
+    assert next(product_iterator).name == "Iphone 15"
+    assert next(product_iterator).name == "Xiaomi Redmi Note 11"
+
+    with pytest.raises(StopIteration):
+        next(product_iterator)

@@ -1,6 +1,7 @@
 import pytest
 
 from src.catalog import Category, Product
+from src.product_iterator import ProductIterator
 
 
 @pytest.fixture
@@ -49,3 +50,8 @@ def product_dict():
         "price": 180000.0,
         "quantity": 5,
     }
+
+
+@pytest.fixture
+def product_iterator(category_smartphone):
+    return ProductIterator(category_smartphone)

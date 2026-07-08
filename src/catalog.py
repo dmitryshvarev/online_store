@@ -85,6 +85,9 @@ class Category:
 
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
+    def __len__(self):
+        """Возвращает длину списка продуктов в категории"""
+        return len(self.__products)
 
     def add_product(self, product: Product) -> None:
         """Метод для добавления продукта в атрибут products."""
@@ -97,3 +100,7 @@ class Category:
         for product in self.__products:
             products_str += f"{str(product)}\n"
         return products_str
+
+    @property
+    def products_in_list(self) -> list[Product]:
+        return self.__products
