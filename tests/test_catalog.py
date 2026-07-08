@@ -35,6 +35,14 @@ def test_product_init(product_samsung, product_iphone, product_xiaomi, product_q
     assert product_qled.quantity == 7
 
 
+def test_product_str(product_samsung, product_iphone, product_xiaomi, product_qled):
+    """Проверяет работу магического метода __str__ классa Product."""
+    assert str(product_samsung) == "Samsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт."
+    assert str(product_iphone) == "Iphone 15, 210000 руб. Остаток: 8 шт."
+    assert str(product_xiaomi) == "Xiaomi Redmi Note 11, 31000 руб. Остаток: 14 шт."
+    assert str(product_qled) == '55" QLED 4K, 123000 руб. Остаток: 7 шт.'
+
+
 def test_category_init(
     category_smartphone, category_tv, product_samsung, product_iphone, product_xiaomi, product_qled
 ):
@@ -56,6 +64,12 @@ Xiaomi Redmi Note 11, 31000 руб. Остаток: 14 шт.\n"""
     )
     assert category_tv.products == '55" QLED 4K, 123000 руб. Остаток: 7 шт.\n'
     # assert category_tv.products == [product_qled]
+
+
+def test_category_str(category_smartphone, category_tv):
+    """Проверяет работу магического метода __str__ классa Category."""
+    assert str(category_smartphone) == "Смартфоны, количество продуктов: 27 шт."
+    assert str(category_tv) == "Телевизоры, количество продуктов: 7 шт."
 
 
 def test_new_product(product_dict):
