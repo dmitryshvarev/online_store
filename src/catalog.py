@@ -13,6 +13,14 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self):
+        """Метод для строкового представления экземпляра класса."""
+        return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Метод, реализующий возможность складывать продукты."""
+        return self.__price * self.quantity + other.__price * other.quantity
+
     @classmethod
     def new_product(cls, product_dict, existing_products=None):
         """Класс-метод для создания или обновления товара на основе словаря."""
@@ -69,6 +77,18 @@ class Category:
         Category.categories_count += 1
         Category.products_count += len(products)
 
+    def __str__(self):
+        """Метод для строкового представления экземпляра класса."""
+        total_quantity = 0
+        for product in self.__products:
+            total_quantity += product.quantity
+
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
+
+    def __len__(self):
+        """Возвращает длину списка продуктов в категории"""
+        return len(self.__products)
+
     def add_product(self, product: Product) -> None:
         """Метод для добавления продукта в атрибут products."""
         self.__products.append(product)
@@ -78,5 +98,9 @@ class Category:
     def products(self) -> str:
         products_str = ""
         for product in self.__products:
-            products_str += f"{product.name}, {int(product.price)} руб. Остаток: {product.quantity} шт.\n"
+            products_str += f"{str(product)}\n"
         return products_str
+
+    @property
+    def products_in_list(self) -> list[Product]:
+        return self.__products
