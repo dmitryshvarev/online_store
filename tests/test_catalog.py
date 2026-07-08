@@ -43,6 +43,10 @@ def test_product_str(product_samsung, product_iphone, product_xiaomi, product_ql
     assert str(product_qled) == '55" QLED 4K, 123000 руб. Остаток: 7 шт.'
 
 
+def test_product_add(product_samsung, product_iphone):
+    assert product_samsung + product_iphone == 2580000.0
+
+
 def test_category_init(
     category_smartphone, category_tv, product_samsung, product_iphone, product_xiaomi, product_qled
 ):

@@ -17,6 +17,10 @@ class Product:
         """Метод для строкового представления экземпляра класса."""
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
+    def __add__(self, other):
+        """Метод, реализующий возможность складывать продукты."""
+        return self.__price * self.quantity + other.__price * other.quantity
+
     @classmethod
     def new_product(cls, product_dict, existing_products=None):
         """Класс-метод для создания или обновления товара на основе словаря."""
