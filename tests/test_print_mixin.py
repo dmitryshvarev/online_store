@@ -1,5 +1,5 @@
 from src.catalog import Product
-from src.products import Smartphone, LawnGrass
+from src.products import LawnGrass, Smartphone
 
 
 def test_print_mixin(capsys):
@@ -14,4 +14,3 @@ def test_print_mixin(capsys):
     LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
     massage = capsys.readouterr()
     assert massage.out.strip() == "LawnGrass(Газонная трава, Элитная трава для газона, 500.0, 20)"
-
