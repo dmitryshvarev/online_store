@@ -3,6 +3,7 @@ from src.catalog import Category
 
 class ProductIterator:
     """Вспомогательный класс, с помощью которого можно перебирать товары одной категории."""
+
     category: Category
     index: int
 

@@ -19,7 +19,10 @@ class Product:
 
     def __add__(self, other):
         """Метод, реализующий возможность складывать продукты."""
-        return self.__price * self.quantity + other.__price * other.quantity
+        if type(self) is type(other):
+            return self.__price * self.quantity + other.__price * other.quantity
+        else:
+            raise TypeError("Складываться могут только товары одного класса")
 
     @classmethod
     def new_product(cls, product_dict, existing_products=None):
@@ -91,8 +94,11 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         """Метод для добавления продукта в атрибут products."""
-        self.__products.append(product)
-        Category.products_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.products_count += 1
+        else:
+            raise TypeError("Можно добавлять только экземпляры класса Product и производных от него")
 
     @property
     def products(self) -> str:

@@ -116,13 +116,13 @@ def test_price_less_or_equal_zero(product_samsung, capsys):
 
 
 def test_price_setter_ignore_drop(product_samsung, monkeypatch):
-    monkeypatch.setattr('builtins.input', lambda _: 'n')
+    monkeypatch.setattr("builtins.input", lambda _: "n")
     product_samsung.price = 100
     assert product_samsung.price == 180000.0
 
 
 def test_price_setter_accept_drop(product_samsung, monkeypatch):
-    monkeypatch.setattr('builtins.input', lambda _: 'y')
+    monkeypatch.setattr("builtins.input", lambda _: "y")
     product_samsung.price = 100
     assert product_samsung.price == 100
 
@@ -144,3 +144,9 @@ def test_product_iterator(product_iterator):
 
     with pytest.raises(StopIteration):
         next(product_iterator)
+
+
+def test_add_product_error(category_tv):
+    with pytest.raises(TypeError) as exc_info:
+        category_tv.add_product(1)
+    assert str(exc_info.value) == "Можно добавлять только экземпляры класса Product и производных от него"
