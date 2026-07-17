@@ -1,6 +1,7 @@
 import pytest
 
 from src.catalog import Category, Product
+from src.order import Order
 from src.product_iterator import ProductIterator
 from src.products import LawnGrass, Smartphone
 
@@ -78,3 +79,8 @@ def lawn_grass_1():
 @pytest.fixture
 def lawn_grass_2():
     return LawnGrass("Газонная трава 2", "Выносливая трава", 450.0, 15, "США", "5 дней", "Темно-зеленый")
+
+
+@pytest.fixture
+def order_iphone(product_iphone):
+    return Order(product_iphone, 2)

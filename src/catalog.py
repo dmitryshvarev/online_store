@@ -1,3 +1,4 @@
+from src.base_category_order import BaseCategoryOrder
 from src.base_product import BaseProduct
 from src.print_mixin import PrintMixin
 
@@ -67,7 +68,7 @@ class Product(BaseProduct, PrintMixin):
             print("Цена не должна быть нулевая или отрицательная")
 
 
-class Category:
+class Category(BaseCategoryOrder):
     """Класс для представления категории товаров."""
 
     categories_count = 0
