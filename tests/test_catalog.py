@@ -150,3 +150,36 @@ def test_add_product_error(category_tv):
     with pytest.raises(TypeError) as exc_info:
         category_tv.add_product(1)
     assert str(exc_info.value) == "Можно добавлять только экземпляры класса Product и производных от него"
+
+
+def test_middle_price(category_smartphone, category_without_products):
+    assert category_smartphone.middle_price() == 140333
+    assert category_without_products.middle_price() == 0
+
+
+def test_add_product_without_quantity(capsys, category_smartphone, product_without_quantity):
+    assert len(category_smartphone) == 3
+
+    category_smartphone.add_product(product_without_quantity)
+    massage = capsys.readouterr()
+    assert massage.out.strip().split("\n")[-2] == "Товар с нулевым количеством не может быть добавлен"
+    assert massage.out.strip().split("\n")[-1] == "Обработка добавления товара завершена"
+
+    assert len(category_smartphone) == 3
+
+
+def test_add_product_with_quantity(capsys, category_smartphone, product_iphone):
+    assert len(category_smartphone) == 3
+
+    category_smartphone.add_product(product_iphone)
+    massage = capsys.readouterr()
+    assert massage.out.strip().split("\n")[-2] == "Товар успешно добавлен"
+    assert massage.out.strip().split("\n")[-1] == "Обработка добавления товара завершена"
+
+    assert len(category_smartphone) == 4
+
+
+def test_product_init_error():
+    with pytest.raises(ValueError) as exc_info:
+        Product("Iphone 15", "512GB, Gray space", 210000.0, -1)
+    assert str(exc_info.value) == "Товар с отрицательным количеством не может быть добавлен"
