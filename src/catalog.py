@@ -1,3 +1,5 @@
+from itertools import product
+
 from src.base_category_order import BaseCategoryOrder
 from src.base_product import BaseProduct
 from src.print_mixin import PrintMixin
@@ -13,6 +15,8 @@ class Product(BaseProduct, PrintMixin):
 
     def __init__(self, name, description, price, quantity):
         """Метод для инициализации экземпляра класса."""
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
         self.name = name
         self.description = description
@@ -117,3 +121,9 @@ class Category(BaseCategoryOrder):
     @property
     def products_in_list(self) -> list[Product]:
         return self.__products
+
+    def middle_price(self):
+        try:
+            return int(sum([_product.price for _product in self.__products]) / len(self.__products))
+        except ZeroDivisionError:
+            return 0
