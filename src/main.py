@@ -1,14 +1,13 @@
 from src.catalog import Category, Product
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
-        product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, -1)
-    except ValueError:
+        product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    except ValueError as e:
         print(
-            "Возникла ошибка ValueError. Попытка добавить продукт с отрицательным количеством"
-        )
+            "Возникла ошибка ValueError прерывающая работу программы при попытке добавить продукт с нулевым количеством")
     else:
-        print("Не возникла ошибка ValueError при попытке добавить продукт с отрицательным количеством")
+        print("Не возникла ошибка ValueError при попытке добавить продукт с нулевым количеством")
 
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)

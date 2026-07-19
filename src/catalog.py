@@ -14,8 +14,8 @@ class Product(BaseProduct, PrintMixin):
 
     def __init__(self, name, description, price, quantity):
         """Метод для инициализации экземпляра класса."""
-        if quantity < 0:
-            raise ValueError("Товар с отрицательным количеством не может быть добавлен")
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
         self.name = name
         self.description = description
@@ -106,9 +106,8 @@ class Category(BaseCategoryOrder):
         """Метод для добавления продукта в атрибут products."""
         if isinstance(product, Product):
             try:
-                if product.quantity == 0:
-                    raise ZeroQuantityError("Товар с нулевым количеством не может быть добавлен")
-            except ZeroQuantityError as e:
+                product
+            except ValueError as e:
                 print(e)
             else:
                 self.__products.append(product)
