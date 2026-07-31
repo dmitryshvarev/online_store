@@ -1,5 +1,6 @@
 from src.base_category_order import BaseCategoryOrder
 from src.base_product import BaseProduct
+from src.exceptions import ZeroQuantityError
 from src.print_mixin import PrintMixin
 
 
@@ -13,6 +14,8 @@ class Product(BaseProduct, PrintMixin):
 
     def __init__(self, name, description, price, quantity):
         """Метод для инициализации экземпляра класса."""
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
         self.name = name
         self.description = description
@@ -102,8 +105,16 @@ class Category(BaseCategoryOrder):
     def add_product(self, product: Product) -> None:
         """Метод для добавления продукта в атрибут products."""
         if isinstance(product, Product):
-            self.__products.append(product)
-            Category.products_count += 1
+            try:
+                product
+            except ValueError as e:
+                print(e)
+            else:
+                self.__products.append(product)
+                Category.products_count += 1
+                print("Товар успешно добавлен")
+            finally:
+                print("Обработка добавления товара завершена")
         else:
             raise TypeError("Можно добавлять только экземпляры класса Product и производных от него")
 
@@ -117,3 +128,10 @@ class Category(BaseCategoryOrder):
     @property
     def products_in_list(self) -> list[Product]:
         return self.__products
+
+    def middle_price(self):
+        """Считает среднюю цену товаров."""
+        try:
+            return int(sum([_product.price for _product in self.__products]) / len(self.__products))
+        except ZeroDivisionError:
+            return 0

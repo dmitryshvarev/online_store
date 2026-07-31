@@ -84,3 +84,12 @@ def lawn_grass_2():
 @pytest.fixture
 def order_iphone(product_iphone):
     return Order(product_iphone, 2)
+
+
+@pytest.fixture
+def category_without_products():
+    return Category(
+        "Смартфоны",
+        "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+        [],
+    )
